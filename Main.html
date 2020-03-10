@@ -38,24 +38,29 @@
                 </h4>
             </div>
             <div class="content active">
-                <form name="formNewPost" class="ui form" ng-class="" role="form" ng-submit="">
+                <form name="formNewPost" class="ui form" ng-class="postAjout" role="form" ng-submit="nouveauPost()">
                     <div class="fields">
-                        <div class="twelve wide field">
-                            <label>TODO</label>
+                        <div class="four wide field">
+                            <label>Titre</label>
                             <div class="ui icon input">
-                                <input name="todo1" ng-model="" type="text" placeholder="TODO" required>
+                                <input name="titre" ng-model="nouveau.titre" type="text" placeholder="Titre du post" required>
                             </div>
                         </div>
-                        <div class="four wide field">
-                            <label>TODO</label>
-                            <input name="todo2" ng-model="" type="text" placeholder="TODO">
+                        <div class="twelve wide field">
+                            <label>Contenu</label>
+                            <input name="contenu" ng-model="nouveau.contenu" type="text" placeholder="Contenu">
                         </div>
                     </div>
+                    <div class="ui success message">
+						<div class="header">Nouveau post ajouté</div>
+						<i class="close icon" ng-click="postAjout=''"></i>
+						<p>Le nouveau post a été ajouté avec succès.</p>
+					</div>
                     <input class="ui button" type="submit" value="Ajouter">
                 </form>
             </div>
         </div>
-
+        <br>
         <div ng-repeat="x in posts">
             <h4 class="ui top attached block header">
                 {{ x.titre }}
@@ -69,8 +74,17 @@
             var app = angular.module('gretagramApp', []);
             app.controller('gestionPosts', function ($scope, $http) {
 
+                $scope.posts = [];
+
                 $scope.aujourdHui = function () {
                     return new Date();
+                }
+
+                //submit du formulaire
+                $scope.nouveauPost = function () {
+                    $scope.posts.push($scope.nouveau);
+                    $scope.nouveau = {};
+                    $scope.postAjout = "success";
                 }
                 // TODO
 
